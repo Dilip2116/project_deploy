@@ -1,0 +1,28 @@
+version: '3'
+services:
+  database:
+    container_name: database
+    build: ./tutor-adda-database/
+    volumes:
+      - myapp:/var/lib/mysql
+  
+  backend:
+    container_name: backend
+    build: ./tutor-adda-server/
+    depends_on:
+      - database
+
+  frontend:
+    container_name: frontend
+    build: ./tutor-adda-frontend/
+    volumes:
+      - mymodule:/node_modules
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+
+volumes:
+  myapp:
+  mymodule:
+    
